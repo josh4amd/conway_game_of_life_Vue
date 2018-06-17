@@ -1,10 +1,36 @@
 <template>
   <div>
     <h1 style="text-align:center">Conway's Game of Life</h1>
-    <button v-on:click="start()" :disabled="this.interval != null">start</button>
-    <button v-on:click="stop()" :disabled="this.interval == null">stop</button>
-    <button v-on:click="clear()" :disabled="this.interval != null">clear</button>
-    <div id='grid'>
+    <div class="content">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1">
+          <input v-model="numRows" v-on:change="sizeUpdated()" class="form-control" type="number" :disabled="this.interval != null"/>
+        </div>
+        <div class="col-md-2">
+          <h2>X</h2>
+        </div>
+        <div class="col-md-1">
+          <input v-model="numCols" v-on:change="sizeUpdated()" class="form-control" type="number" :disabled="this.interval != null"/>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div style="padding-bottom: 10px" class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+          <button class="form-control" v-on:click="start()" :disabled="this.interval != null">start</button>
+        </div>
+        <div class="col-md-2">
+          <button class="form-control" v-on:click="stop()" :disabled="this.interval == null">stop</button>
+        </div>
+        <div class="col-md-2">
+          <button class="form-control" v-on:click="clear()" :disabled="this.interval != null">clear</button>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" id='grid'></div>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +42,9 @@ export default {
   data () {
     return {
       gData: [],
-      interval: null
+      interval: null,
+      numRows: 10,
+      numCols: 10
     }
   },
   methods: {
@@ -40,11 +68,11 @@ export default {
       var isLive = false;
 
       // iterate for rows
-      for (var row = 0; row < 10; row++) {
+      for (var row = 0; row < this.$data.numCols; row++) {
         data.push( new Array() );
 
         // iterate for cells/columns inside rows
-        for (var column = 0; column < 10; column++) {
+        for (var column = 0; column < this.$data.numRows; column++) {
           data[row].push({
             x: xpos,
             y: ypos,
@@ -102,42 +130,42 @@ export default {
     	var count = 0;
 
     	//top-left
-    	if(this.$data.gData[x - 1 < 0 ? 10 - 1 : x - 1][y - 1 < 0 ? 10 - 1 : y - 1].isLive) {
+    	if(this.$data.gData[x - 1 < 0 ? this.$data.numCols - 1 : x - 1][y - 1 < 0 ? this.$data.numRows - 1 : y - 1].isLive) {
     		count++;
     	}
 
     	//top
-    	if(this.$data.gData[x][y - 1 < 0 ? 10 - 1 : y - 1].isLive) {
+    	if(this.$data.gData[x][y - 1 < 0 ? this.$data.numRows - 1 : y - 1].isLive) {
     		count++;
     	}
 
     	//top-right
-    	if(this.$data.gData[x + 1 > 10 - 1 ? 0 : x + 1][y - 1 < 0 ? 10 - 1 : y - 1].isLive) {
+    	if(this.$data.gData[x + 1 > this.$data.numCols - 1 ? 0 : x + 1][y - 1 < 0 ? this.$data.numRows - 1 : y - 1].isLive) {
     		count++;
     	}
 
     	//left
-    	if(this.$data.gData[x - 1 < 0 ? 10 - 1 : x - 1][y].isLive) {
+    	if(this.$data.gData[x - 1 < 0 ? this.$data.numCols - 1 : x - 1][y].isLive) {
     		count++;
     	}
 
     	//right
-    	if(this.$data.gData[x + 1 > 10 - 1 ? 0 : x + 1][y].isLive) {
+    	if(this.$data.gData[x + 1 > this.$data.numCols - 1 ? 0 : x + 1][y].isLive) {
     		count++;
     	}
 
     	//bottom-left
-    	if(this.$data.gData[x - 1 < 0 ? 10 - 1 : x - 1][y + 1 > 10 - 1 ? 0 : y + 1].isLive) {
+    	if(this.$data.gData[x - 1 < 0 ? this.$data.numCols - 1 : x - 1][y + 1 > this.$data.numRows - 1 ? 0 : y + 1].isLive) {
     		count++;
     	}
 
     	//bottom
-    	if(this.$data.gData[x][y + 1 > 10 - 1 ? 0 : y + 1].isLive) {
+    	if(this.$data.gData[x][y + 1 > this.$data.numRows - 1 ? 0 : y + 1].isLive) {
     		count++;
     	}
 
     	//bottom-right
-    	if(this.$data.gData[x + 1 > 10 - 1 ? 0 : x + 1][y + 1 > 10 - 1 ? 0 : y + 1].isLive) {
+    	if(this.$data.gData[x + 1 > this.$data.numCols - 1 ? 0 : x + 1][y + 1 > this.$data.numRows - 1 ? 0 : y + 1].isLive) {
     		count++;
     	}
 
@@ -148,8 +176,8 @@ export default {
 
       d3.select("svg").remove();
 
-    	for(var i = 0; i < 10; i++) {
-    		for(var j = 0; j < 10; j++) {
+    	for(var i = 0; i < this.$data.numCols; i++) {
+    		for(var j = 0; j < this.$data.numRows; j++) {
     			var neighbors = this.countNeighbors(i, j);
 
     			//console.log('neighbors ', i, ' ', j, ' ', neighbors);
@@ -188,6 +216,11 @@ export default {
     clear() {
       this.$data.gData = this.gridData()
       this.update();
+    },
+    sizeUpdated() {
+      if(this.$data.numRows < 3) { this.$data.numRows = 3 }
+      if(this.$data.numCols < 3) { this.$data.numCols = 3 }
+      this.clear()
     }
   },
   mounted () {
