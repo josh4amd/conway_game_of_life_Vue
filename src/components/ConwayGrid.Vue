@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1 style="text-align:center">Conway's Game of Life</h1>
-    <button v-on:click="start()">start</button>
-    <button v-on:click="stop()">stop</button>
-    <button v-on:click="clear()">clear</button>
+    <button v-on:click="start()" :disabled="this.interval != null">start</button>
+    <button v-on:click="stop()" :disabled="this.interval == null">stop</button>
+    <button v-on:click="clear()" :disabled="this.interval != null">clear</button>
     <div id='grid'>
     </div>
   </div>
@@ -182,6 +182,8 @@ export default {
     },
     stop() {
       clearInterval(this.interval)
+      // set so we can make disabled button check
+      this.interval = null;
     },
     clear() {
       this.$data.gData = this.gridData()

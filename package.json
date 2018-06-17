@@ -14,7 +14,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "d3": "^5.5.0",
+    "loader": "^2.1.1",
+    "scss": "^0.2.4",
     "vue": "^2.5.2"
   },
   "devDependencies": {
