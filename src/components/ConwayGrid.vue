@@ -95,8 +95,8 @@ export default {
     drawGrid (data) {
       let grid = d3.select('#grid')
         .append('svg')
-        .attr('width', '510px')
-        .attr('height', '510px')
+        .attr('width', (this.$data.numRows * 50) + 2)
+        .attr('height', (this.$data.numCols * 50) + 2)
 
       let row = grid.selectAll('.row')
         .data(data)
