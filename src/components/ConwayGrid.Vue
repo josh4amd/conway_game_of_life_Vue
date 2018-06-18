@@ -59,6 +59,7 @@ export default {
       }
       return output
     },
+    // Adapted from: https://bl.ocks.org/cagrimmett/07f8c8daea00946b9e704e3efcbd5739
     gridData () {
       let data = []
       let xpos = 1
