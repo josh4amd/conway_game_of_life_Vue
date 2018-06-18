@@ -1,6 +1,7 @@
 # conway_game
 
 > Conway's Game of Life
+> Build using Webpack and Vue
 
 ## Build Setup
 
@@ -19,9 +20,6 @@ npm run build --report
 
 # run unit tests
 npm run unit
-
-# run e2e tests
-npm run e2e
 
 # run all tests
 npm test
