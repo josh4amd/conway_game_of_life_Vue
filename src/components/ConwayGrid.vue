@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 style="text-align:center">Conway's Game of Life</h1>
+    <p>Click to set/unset each cell (Clear-Dead, Dark-Live). Press Start/Stop to control simulation. Press clear to reset.</p>
     <div style="background-color: #e9ecef; padding-top: 10px;" class="content">
       <div class="row">
         <div class="col-md-4"></div>
