@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <HelloWorld/>
     <ConwayGrid/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 import ConwayGrid from './components/ConwayGrid'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
     ConwayGrid
   }
 }
